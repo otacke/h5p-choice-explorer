@@ -1,0 +1,47 @@
+.slider-panel-container {
+  container-type: inline-size;
+  container-name: slider-panel;
+
+  .slider-panel {
+    --slider-panel-column-gap: 0.5rem;
+    column-gap: var(--slider-panel-column-gap);
+    display: grid;
+    grid-template-columns: var(--label-width, 10ch) 1fr var(--input-field-width) var(--unit-width, 2ch);
+
+    .slider-panel-input {
+      position: relative;
+      right: calc(-1 * var(--unitless, 0) * var(--slider-panel-column-gap));
+    }
+  }
+}
+
+@container slider-panel (width < 480px) {
+  .slider-panel-container .slider-panel {
+    grid-template-columns: 1fr var(--input-field-width) var(--unit-width, 2ch);
+    grid-template-rows: 1fr 1fr;
+
+    .slider-panel-label {
+      grid-column: 1 / span 3;
+    }
+  }
+}
+
+@container slider-panel (width < 15rem) {
+  .slider-panel-container .slider-panel {
+    grid-template-columns: 1fr var(--input-field-width) var(--unit-width, 2ch);
+    grid-template-rows: 1fr 1fr 1fr;
+
+    .slider-panel-label {
+      grid-column: 1 / span 3;
+    }
+
+    .slider-container {
+      grid-column: 1 / span 3;
+    }
+
+    .slider-panel-input {
+      grid-column: 1 / span 2;
+      justify-self: end;
+    }
+  }
+}

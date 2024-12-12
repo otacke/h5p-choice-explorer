@@ -1,0 +1,43 @@
+{
+  "name": "h5p-lisum",
+  "version": "1.0.0",
+  "description": "H5P.Lisum (TODO)",
+  "private": true,
+  "scripts": {
+    "lint": "stylelint './src/**/*.scss' && eslint './src/**/*.js'",
+    "build": "webpack --mode=production",
+    "watch": "webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/otacke/h5p-lisum.git"
+  },
+  "keywords": [
+    "h5p",
+    "library"
+  ],
+  "author": "Oliver Tacke",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "css-loader": "^7.1.2",
+    "eslint-config-snordian-h5p": "github:otacke/eslint-config-snordian-h5p",
+    "mini-css-extract-plugin": "^2.9.2",
+    "regenerator-runtime": "^0.14.1",
+    "resolve-url-loader": "^5.0.0",
+    "sass": "^1.82.0",
+    "sass-loader": "^16.0.4",
+    "stylelint": "^16.11.0",
+    "stylelint-config-recommended": "^14.0.1",
+    "stylelint-config-recommended-scss": "^14.1.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "he": "^1.2.0"
+  },
+  "browserslist": "> 0.5%, last 3 versions, Firefox ESR, not dead"
+}

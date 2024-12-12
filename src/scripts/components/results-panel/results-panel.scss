@@ -1,0 +1,41 @@
+.results-panel-container {
+  container-type: inline-size;
+  container-name: results-panel;
+
+  .results-panel {
+    --results-panel-column-gap: 0.5rem;
+
+    column-gap: var(--results-panel-column-gap);
+    display: grid;
+    grid-template-columns: 1fr var(--input-field-width) var(--unit-width, 2ch);
+
+    .results-panel-label {
+      font-weight: bold;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .results-panel-value {
+      width: calc(var(--input-field-width) - 0.5rem);
+      position: relative;
+      right: calc(-1 * var(--unitless, 0) * var(--results-panel-column-gap));
+    }
+  }
+}
+
+@container results-panel (width < 15rem) {
+  .results-panel-container .results-panel {
+    grid-template-columns: 1fr var(--input-field-width) var(--unit-width, 2ch);
+    grid-template-rows: 1fr 1fr;
+
+    .results-panel-label {
+      grid-column: 1 / span 3;
+    }
+
+    .results-panel-value {
+      grid-column: 1 / span 2;
+      justify-self: end;
+    }
+  }
+}

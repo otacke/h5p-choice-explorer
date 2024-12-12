@@ -1,0 +1,114 @@
+[
+  {
+    "name": "media",
+    "type": "group",
+    "label": "Media",
+    "importance": "medium",
+    "fields": [
+      {
+        "name": "type",
+        "type": "library",
+        "label": "Type",
+        "importance": "medium",
+        "options": [
+          "H5P.Image 1.1",
+          "H5P.Video 1.6",
+          "H5P.Audio 1.5"
+        ],
+        "optional": true,
+        "description": "Optional media to display above the question."
+      },
+      {
+        "name": "disableImageZooming",
+        "type": "boolean",
+        "label": "Disable image zooming",
+        "importance": "low",
+        "default": false,
+        "optional": true,
+        "widget": "showWhen",
+        "showWhen": {
+          "rules": [
+            {
+              "field": "type",
+              "equals": "H5P.Image 1.1"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "taskDescription",
+    "label": "Task description",
+    "type": "text",
+    "widget": "html",
+    "importance": "high",
+    "description": "Describe your task here.",
+    "enterMode": "div",
+    "tags": [
+      "strong",
+      "em",
+      "u",
+      "a",
+      "ul",
+      "ol",
+      "h2",
+      "h3",
+      "hr",
+      "pre",
+      "code"
+    ]
+  },
+  {
+    "name": "matrix",
+    "label": "Matrix",
+    "type": "group",
+    "expanded": true,
+    "importance": "high",
+    "fields": []
+  },
+  {
+    "name": "l10n",
+    "type": "group",
+    "label": "User interface",
+    "common": true,
+    "fields": [
+      {
+        "name": "sample",
+        "type": "text",
+        "label": "Sample entry for visible user interface strings",
+        "description": "This is just a sample entry for visible user interface strings.",
+        "default": "Sample l10n"
+      },
+      {
+        "name": "dummy",
+        "type": "text",
+        "label": "Dummy",
+        "default": "Dummy",
+        "widget": "none"
+      }
+    ]
+  },
+  {
+    "name": "a11y",
+    "type": "group",
+    "label": "Accessibility texts",
+    "common": true,
+    "fields": [
+      {
+        "name": "sample",
+        "type": "text",
+        "label": "Sample entry for accessibility strings",
+        "description": "This is just a sample entry for accessibility strings.",
+        "default": "Sample a11y"
+      },
+      {
+        "name": "dummy",
+        "type": "text",
+        "label": "Dummy",
+        "default": "Dummy",
+        "widget": "none"
+      }
+    ]
+  }
+]

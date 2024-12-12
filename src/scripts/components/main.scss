@@ -1,0 +1,21 @@
+.h5p-lisum-main {
+  --input-field-width: 5rem; // TODO: Needs to be dynamic
+
+  display: flex;
+  flex-direction: column;
+
+  .h5p-lisum-slider-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .h5p-lisum-results-panels {
+    border-top: 1px solid var(--color-shadow-light);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+  }
+}

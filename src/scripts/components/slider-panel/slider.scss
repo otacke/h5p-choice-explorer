@@ -1,0 +1,89 @@
+.slider-container {
+  --box-shadow-params: 0 0 0 0.5rem;
+  --slider-min-width: 4rem;
+
+  min-width: var(--slider-min-width);
+  width: 100%;
+
+  .slider {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--color-primary-15);
+    border-radius: 3px;
+    height: 0.5rem;
+    margin: 0;
+    opacity: 0.7;
+    outline: none;
+    -webkit-transition: .2s;
+    touch-action: none;
+    transition: opacity .2s;
+    width: 100%;
+
+    &[disabled] {
+      &::-webkit-slider-thumb {
+        background: var(--color-disabled);
+      }
+    }
+
+    &:not([disabled]) {
+      cursor: pointer;
+    }
+
+    &:hover:not([disabled]) {
+      opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--color-primary-dark);
+      border: none;
+      border-radius: 50%;
+      height: 1rem;
+      width: 1rem;
+
+      &:hover:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
+      }
+
+      &:active:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
+      }
+
+      &:focus:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
+      }
+    }
+
+    &::-moz-range-thumb {
+      appearance: none;
+      background: var(--color-primary-dark);
+      border: none;
+      border-radius: 50%;
+      height: 1rem;
+      width: 1rem;
+
+      &:hover:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
+      }
+
+      &:active:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
+      }
+
+      &:focus:not([disabled]) {
+        box-shadow: var(--box-shadow-params) var(--color-primary-30);
+      }
+    }
+
+    &:focus:not([disabled]) {
+      &::-webkit-slider-thumb {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
+      }
+
+      &::-moz-range-thumb {
+        box-shadow: var(--box-shadow-params) var(--color-primary-20);
+      }
+    }
+  }
+}
