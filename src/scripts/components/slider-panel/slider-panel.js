@@ -17,13 +17,13 @@ export default class SliderPanel {
    * @param {function} [callbacks.onValueChanged] Callback when value changed.
    */
   constructor(params = {}, callbacks = {}) {
-    params = Util.extend({
+    this.params = Util.extend({
       label: '',
       min: 0,
       unit: ''
     }, params);
 
-    this.maxValue = params.max || FALLBACK_MAX_VALUE;
+    this.dynamicMaxValue = FALLBACK_MAX_VALUE;
 
     callbacks = Util.extend({
       onValueChanged: () => {}
@@ -38,40 +38,40 @@ export default class SliderPanel {
 
     const label = document.createElement('label');
     label.classList.add('slider-panel-label');
-    label.textContent = params.label;
+    label.textContent = this.params.label;
     panel.append(label);
 
-    const slider = new Slider(
+    this.slider = new Slider(
       {
-        minValue: params.min,
-        maxValue: this.maxValue,
+        minValue: this.params.min,
+        maxValue: this.params.max || this.dynamicMaxValue,
         ariaLabel: 'TODO' // TODO: Combination of slider and option name
       },
       {
         onSeeked: (value) => {
-          this.input.setValue(value);
+          this.handleSliderSeeked(value);
+          callbacks.onValueChanged(value);
+        },
+        onEnded: (value) => {
+          this.handleSliderEnded(value);
           callbacks.onValueChanged(value);
         }
       }
     );
-    panel.append(slider.getDOM());
+    panel.append(this.slider.getDOM());
 
     this.input = new InputField(
       {
-        min: params.min,
-        max: params.max
+        min: this.params.min,
+        max: this.params.max,
+        baseMax: this.dynamicMaxValue
       }, {
         onInput: (value) => {
-          this.maxValue = this.computeNextMaxValue(value);
-          slider.setMaxValue(this.maxValue);
-          slider.setValue(value);
+          this.handleInputInput(value);
           callbacks.onValueChanged(value);
         },
         onBlur: () => {
-          const value = this.input.getValue();
-          if (typeof value !== 'number' || isNaN(value) || value < params.min || value > params.max) {
-            this.input.setValue(slider.getValue());
-          }
+          this.handleInputBlur();
         }
       }
     );
@@ -80,8 +80,16 @@ export default class SliderPanel {
     const unit = document.createElement('span');
     unit.classList.add('slider-panel-unit');
 
-    unit.textContent = params.unit;
+    unit.textContent = this.params.unit;
     panel.append(unit);
+  }
+
+  /**
+   * Determine whether the panel has a fixed max value.
+   * @returns {boolean} True if the panel has a fixed max value, else false.
+   */
+  hasFixedMaxValue() {
+    return !!this.params.max;
   }
 
   /**
@@ -100,9 +108,66 @@ export default class SliderPanel {
     return this.input.getValue();
   }
 
-  computeNextMaxValue(value) {
-    const adjustedValue = Math.max(value + 1, FALLBACK_MAX_VALUE);
-    const exponent = Math.ceil(Math.log10(adjustedValue / FALLBACK_MAX_VALUE));
-    return FALLBACK_MAX_VALUE * Math.pow(10, exponent);
+  /**
+   * Compute next max value from base value scaled by the power of 10.
+   * @param {number} value Current value.
+   * @param {number} [base] Base value.
+   * @returns {number} Next max value.
+   */
+  computeNextMaxValue(value, base = FALLBACK_MAX_VALUE) {
+    const adjustedValue = Math.max(value + 1, base);
+    const exponent = Math.ceil(Math.log10(adjustedValue / base));
+    return base * Math.pow(10, exponent);
+  }
+
+  /**
+   * Handle slider seeked.
+   * @param {number} value Current value.
+   */
+  handleSliderSeeked(value) {
+    if (!this.hasFixedMaxValue()) {
+      this.dynamicMaxValue = this.computeNextMaxValue(value);
+      this.input.setMaxValue(this.dynamicMaxValue);
+    }
+
+    this.input.setValue(value);
+  }
+
+  /**
+   * Handle slider ended.
+   * @param {number} value Current value.
+   */
+  handleSliderEnded(value) {
+    const nextMaxValue = this.computeNextMaxValue(value);
+    if (!this.hasFixedMaxValue() && (value === this.slider.getMaxValue() || value < this.dynamicMaxValue)) {
+      this.dynamicMaxValue = nextMaxValue;
+      this.slider.setMaxValue(this.dynamicMaxValue);
+      this.slider.setValue(value);
+    }
+  }
+
+  /**
+   * Handle input field input.
+   * @param {number} value Current value.
+   */
+  handleInputInput(value) {
+    if (!this.hasFixedMaxValue()) {
+      this.dynamicMaxValue = this.computeNextMaxValue(value);
+      this.slider.setMaxValue(this.dynamicMaxValue);
+    }
+
+    this.slider.setValue(value);
+  }
+
+  /**
+   * Handle input field blur.
+   * @param {number} value Current value.
+   */
+  handleInputBlur(value) {
+    if (typeof value !== 'number' || isNaN(value) || value < this.params.min || value > this.params.max) {
+      return;
+    }
+
+    this.input.setValue(this.slider.getValue());
   }
 }

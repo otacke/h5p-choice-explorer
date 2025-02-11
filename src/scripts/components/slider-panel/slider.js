@@ -54,7 +54,7 @@ export default class Slider {
 
     ['keyup', 'mouseup', 'touchend'].forEach((eventType) => {
       this.slider.addEventListener(eventType, (event) => {
-        this.handleSliderEnded(event);
+        this.handleSliderEnded(parseFloat(this.slider.value));
       });
     });
 
@@ -113,6 +113,14 @@ export default class Slider {
     this.params.maxValue = maxValue;
     this.slider.setAttribute('max', `${maxValue}`);
     this.slider.setAttribute('aria-valuemax', `${maxValue}`);
+  }
+
+  /**
+   * Get maximum value.
+   * @returns {number} Maximum value.
+   */
+  getMaxValue() {
+    return this.params.maxValue;
   }
 
   /**
@@ -194,9 +202,10 @@ export default class Slider {
 
   /**
    * Handle slider ended.
+   * @param {number} value Value.
    */
-  handleSliderEnded() {
+  handleSliderEnded(value) {
     this.keydownTime = 0;
-    this.callbacks.onEnded();
+    this.callbacks.onEnded(value);
   }
 }

@@ -7,6 +7,7 @@ export default class InputField {
    * @param {object} params Parameters.
    * @param {number} [params.min] Minimum value for input.
    * @param {number} [params.max] Maximum value for input.
+   * @param {number} [params.baseMax] Base maximum value for input.
    * @param {object} callbacks Callbacks.
    * @param {function} [callbacks.onInput] Callback when input changed.
    * @param {function} [callbacks.onBlur] Callback when input blurred.
@@ -25,10 +26,13 @@ export default class InputField {
     this.dom.classList.add('slider-panel-input');
     this.dom.setAttribute('type', 'number');
     this.dom.setAttribute('min', `${params.min}`);
+    this.dom.value = Math.max(params.min, Math.min(0, params.max ?? 0));
     if (params.max) {
       this.dom.setAttribute('max', `${params.max}`);
     }
-    this.dom.value = Math.max(params.min, Math.min(0, params.max ?? 0));
+    else {
+      this.dom.setAttribute('max', `${params.baseMax}`);
+    }
 
     this.dom.addEventListener('input', () => {
       this.handleInput();
@@ -45,6 +49,18 @@ export default class InputField {
    */
   getDOM() {
     return this.dom;
+  }
+
+  /**
+   * Set max value.
+   * @param {number} maxValue Maximum value.
+   */
+  setMaxValue(maxValue) {
+    if (typeof maxValue !== 'number' || isNaN(maxValue) || maxValue < this.params.min) {
+      return;
+    }
+
+    this.dom.setAttribute('max', `${maxValue}`);
   }
 
   /**
@@ -83,6 +99,6 @@ export default class InputField {
    * Handle blur.
    */
   handleBlur() {
-    this.callbacks.onBlur();
+    this.callbacks.onBlur(parseFloat(this.dom.value));
   }
 }
