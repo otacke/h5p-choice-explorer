@@ -28,7 +28,7 @@ export default class InputField {
     if (params.max) {
       this.dom.setAttribute('max', `${params.max}`);
     }
-    this.dom.value = Math.max(params.min, Math.min(0, params.max));
+    this.dom.value = Math.max(params.min, Math.min(0, params.max ?? 0));
 
     this.dom.addEventListener('input', () => {
       this.handleInput();
