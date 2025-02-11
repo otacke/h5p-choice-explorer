@@ -18,8 +18,7 @@ export default class Slider {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       ariaLabel: 'Slider',
-      minValue: 0,
-      maxValue: 100
+      minValue: 0
     }, params);
 
     this.callbacks = Util.extend({
@@ -100,6 +99,20 @@ export default class Slider {
    */
   getValue() {
     return parseFloat(this.slider.value);
+  }
+
+  /**
+   * Set maximum value.
+   * @param {number} maxValue Maximum value.
+   */
+  setMaxValue(maxValue) {
+    if (typeof maxValue !== 'number' || isNaN(maxValue) || maxValue < this.params.minValue) {
+      return;
+    }
+
+    this.params.maxValue = maxValue;
+    this.slider.setAttribute('max', `${maxValue}`);
+    this.slider.setAttribute('aria-valuemax', `${maxValue}`);
   }
 
   /**

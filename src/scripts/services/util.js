@@ -14,7 +14,7 @@ export default class Util {
           ) {
             this.extend(arguments[0][key], arguments[i][key]);
           }
-          else {
+          else if (arguments[i][key] !== undefined) {
             arguments[0][key] = arguments[i][key];
           }
         }

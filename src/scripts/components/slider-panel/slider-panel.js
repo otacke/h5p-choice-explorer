@@ -3,6 +3,8 @@ import Slider from './slider.js';
 import InputField from './input-field.js';
 import './slider-panel.scss';
 
+export const FALLBACK_MAX_VALUE = 100;
+
 export default class SliderPanel {
 
   /**
@@ -18,9 +20,10 @@ export default class SliderPanel {
     params = Util.extend({
       label: '',
       min: 0,
-      max: 100,
       unit: ''
     }, params);
+
+    this.maxValue = params.max || FALLBACK_MAX_VALUE;
 
     callbacks = Util.extend({
       onValueChanged: () => {}
@@ -41,7 +44,7 @@ export default class SliderPanel {
     const slider = new Slider(
       {
         minValue: params.min,
-        maxValue: params.max,
+        maxValue: this.maxValue,
         ariaLabel: 'TODO' // TODO: Combination of slider and option name
       },
       {
@@ -59,6 +62,8 @@ export default class SliderPanel {
         max: params.max
       }, {
         onInput: (value) => {
+          this.maxValue = this.computeNextMaxValue(value);
+          slider.setMaxValue(this.maxValue);
           slider.setValue(value);
           callbacks.onValueChanged(value);
         },
@@ -93,5 +98,11 @@ export default class SliderPanel {
    */
   getValue() {
     return this.input.getValue();
+  }
+
+  computeNextMaxValue(value) {
+    const adjustedValue = Math.max(value + 1, FALLBACK_MAX_VALUE);
+    const exponent = Math.ceil(Math.log10(adjustedValue / FALLBACK_MAX_VALUE));
+    return FALLBACK_MAX_VALUE * Math.pow(10, exponent);
   }
 }

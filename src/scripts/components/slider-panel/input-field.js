@@ -13,8 +13,7 @@ export default class InputField {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      min: 0,
-      max: 100
+      min: 0
     }, params);
 
     this.callbacks = Util.extend({
@@ -26,7 +25,9 @@ export default class InputField {
     this.dom.classList.add('slider-panel-input');
     this.dom.setAttribute('type', 'number');
     this.dom.setAttribute('min', `${params.min}`);
-    this.dom.setAttribute('max', `${params.max}`);
+    if (params.max) {
+      this.dom.setAttribute('max', `${params.max}`);
+    }
     this.dom.value = Math.max(params.min, Math.min(0, params.max));
 
     this.dom.addEventListener('input', () => {
@@ -71,7 +72,7 @@ export default class InputField {
    */
   handleInput() {
     const value = parseFloat(this.dom.value);
-    if (typeof value !== 'number' || isNaN(value) || value < this.params.min || value > this.params.max) {
+    if (typeof value !== 'number' || isNaN(value) || value < this.params.min) {
       return;
     }
 

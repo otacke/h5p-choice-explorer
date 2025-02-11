@@ -35,7 +35,7 @@ export default class Main {
     const options = [
       { label: 'Beton', unit: 't', weights: [175, 96.6], max: 1000 },
       { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
-      { label: 'Lehmziegel', unit: 't', weights: [25, 303.1], max: 1000 },
+      { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
     ];
 
     options.forEach((option) => {
