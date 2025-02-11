@@ -172,12 +172,11 @@ export default class Slider {
 
   /**
    * Handle slider seeked.
-   * @param {number} time Time.
+   * @param {number} value Value.
    */
-  handleSliderSeeked(time) {
-    const currentTime = time;
-    this.callbacks.onSeeked(currentTime);
-    this.setValue(currentTime);
+  handleSliderSeeked(value) {
+    this.callbacks.onSeeked(value);
+    this.setValue(value);
   }
 
   /**
