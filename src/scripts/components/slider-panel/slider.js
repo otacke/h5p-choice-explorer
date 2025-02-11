@@ -102,17 +102,24 @@ export default class Slider {
   }
 
   /**
-   * Set maximum value.
-   * @param {number} maxValue Maximum value.
+   * Set slider to position.
+   * @param {number} value Position to set slider to.
    */
-  setMaxValue(maxValue) {
-    if (typeof maxValue !== 'number' || isNaN(maxValue) || maxValue < this.params.minValue) {
+  setValue(value) {
+    if (typeof value !== 'number' || isNaN(value)) {
       return;
     }
 
-    this.params.maxValue = maxValue;
-    this.slider.setAttribute('max', `${maxValue}`);
-    this.slider.setAttribute('aria-valuemax', `${maxValue}`);
+    const percentage = (value / this.params.maxValue) * 100;
+
+    this.slider.style.background =
+      `linear-gradient(to right, var(--color-primary-dark-80) ${percentage}%, var(--color-primary-15) ${percentage}%)`;
+
+    // Required for Firefox to update slider value reliably when max value changed.
+    window.requestAnimationFrame(() => {
+      this.slider.value = Math.max(0, Math.min(value, this.params.maxValue));
+      this.slider.setAttribute('aria-valuenow', value);
+    });
   }
 
   /**
@@ -124,21 +131,17 @@ export default class Slider {
   }
 
   /**
-   * Set slider to position.
-   * @param {number} value Position to set slider to.
+   * Set maximum value.
+   * @param {number} maxValue Maximum value.
    */
-  setValue(value) {
-    if (typeof value !== 'number' || isNaN(value)) {
+  setMaxValue(maxValue) {
+    if (typeof maxValue !== 'number' || isNaN(maxValue) || maxValue < this.params.minValue) {
       return;
     }
 
-    this.slider.value = Math.max(0, Math.min(value, this.params.maxValue));
-    this.slider.setAttribute('aria-valuenow', value);
-
-    const percentage = (value / this.params.maxValue) * 100;
-
-    this.slider.style.background =
-      `linear-gradient(to right, var(--color-primary-dark-80) ${percentage}%, var(--color-primary-15) ${percentage}%)`;
+    this.params.maxValue = maxValue;
+    this.slider.setAttribute('max', `${maxValue}`);
+    this.slider.setAttribute('aria-valuemax', `${maxValue}`);
   }
 
   /**
@@ -180,6 +183,7 @@ export default class Slider {
    * @param {Event} event Event.
    */
   handleSliderStarted(event) {
+    this.isSeeking = true;
     if (event instanceof KeyboardEvent) {
       const wasKeyHandled = this.handleKeyboardEvent(event);
       if (wasKeyHandled) {
@@ -196,6 +200,10 @@ export default class Slider {
    * @param {number} value Value.
    */
   handleSliderSeeked(value) {
+    if (!this.isSeeking) {
+      return; // Workaround for Firefox, would otherwise trigger 'input event' => sliderSeeked after sliderEnded.
+    }
+
     this.callbacks.onSeeked(value);
     this.setValue(value);
   }
@@ -205,6 +213,7 @@ export default class Slider {
    * @param {number} value Value.
    */
   handleSliderEnded(value) {
+    this.isSeeking = false;
     this.keydownTime = 0;
     this.callbacks.onEnded(value);
   }

@@ -9,8 +9,7 @@
     grid-template-columns: var(--label-width, 10ch) 1fr var(--input-field-width) var(--unit-width, 2ch);
 
     .slider-panel-input {
-      position: relative;
-      right: calc(-1 * var(--unitless, 0) * var(--slider-panel-column-gap));
+      justify-self: end;
     }
   }
 }
@@ -41,7 +40,6 @@
 
     .slider-panel-input {
       grid-column: 1 / span 2;
-      justify-self: end;
     }
   }
 }

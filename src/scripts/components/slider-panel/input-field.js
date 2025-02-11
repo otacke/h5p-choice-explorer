@@ -1,4 +1,5 @@
 import Util from '@services/util.js';
+import './input-field.scss';
 
 export default class InputField {
 

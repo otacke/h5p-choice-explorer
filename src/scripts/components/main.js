@@ -16,8 +16,8 @@ export default class Main {
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-lisum-main');
 
-    const sliderPanels = {};
-    const resultsPanels = [];
+    this.sliderPanels = {};
+    this.resultsPanels = [];
 
     const slidersDOM = document.createElement('div');
     slidersDOM.classList.add('h5p-lisum-slider-panels');
@@ -32,55 +32,44 @@ export default class Main {
       { label: 'Kosten', unit: '€' }
     ];
 
-    const options = [
+    this.options = [
       { label: 'Beton', unit: 't', weights: [175, 96.6], max: 1000 },
       { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
       { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
     ];
 
-    options.forEach((option) => {
-      sliderPanels[option.label] = new SliderPanel(
+    this.options.forEach((option) => {
+      this.sliderPanels[option.label] = new SliderPanel(
         { label: option.label, unit: option.unit, max: option.max },
         {
-          onValueChanged: (value) => {
-            updateResults();
+          onValueChanged: () => {
+            this.updateResults();
+          },
+          onMaxValueChanged: () => {
+            this.updateInputfieldsWidth();
           }
         }
       );
-      slidersDOM.append(sliderPanels[option.label].getDOM());
+      slidersDOM.append(this.sliderPanels[option.label].getDOM());
     });
 
     targets.forEach((target) => {
       const resultsPanel = new ResultsPanel(
         { label: target.label, unit: target.unit }
       );
-      resultsPanels.push(resultsPanel);
+      this.resultsPanels.push(resultsPanel);
       resultsDOM.append(resultsPanel.getDOM());
     });
 
-    const maxLabelLength = Math.max(...options.map((option) => (option.label ?? '').length));
+    const maxLabelLength = Math.max(...this.options.map((option) => (option.label ?? '').length));
     this.dom.style.setProperty('--label-width', `${maxLabelLength}ch`);
 
-    const units = options.map((option) => option.unit).concat(targets.map((target) => target.unit));
+    const units = this.options.map((option) => option.unit).concat(targets.map((target) => target.unit));
     const maxUnitLength = Math.max(...units.map((unit) => (unit ?? '').length));
     this.dom.style.setProperty('--unit-width', `${maxUnitLength}ch`);
-    if (maxUnitLength === 0) {
-      this.dom.style.setProperty('--unitless', '1');
-    }
 
-    const updateResults = () => {
-      resultsPanels.forEach((resultsPanel, index) => {
-        const resultValue = options.reduce((acc, option) => {
-          const weight = option.weights[index];
-          const value = sliderPanels[option.label].getValue();
-          return acc + weight * value;
-        }, 0);
-
-        resultsPanel.setValue(Math.round(resultValue));
-      });
-    };
-
-    updateResults();
+    this.updateInputfieldsWidth();
+    this.updateResults();
   }
 
   /**
@@ -89,5 +78,31 @@ export default class Main {
    */
   getDOM() {
     return this.dom;
+  }
+
+  /**
+   * Update results.
+   */
+  updateResults() {
+    let maxMaxValue = 0;
+
+    this.resultsPanels.forEach((resultsPanel, index) => {
+      const resultValue = this.options.reduce((acc, option) => {
+        const weight = option.weights[index];
+        const value = this.sliderPanels[option.label].getValue();
+        return acc + weight * value;
+      }, 0);
+
+      resultsPanel.setValue(Math.round(resultValue));
+      maxMaxValue = Math.max(maxMaxValue,  Math.ceil(Math.log10(Math.round(resultValue))));
+    });
+
+    this.dom.style.setProperty('--max-result-digits', `${maxMaxValue}`);
+  }
+
+  updateInputfieldsWidth() {
+    const maxMaxValue = Math.max(...Object.values(this.sliderPanels).map((sliderPanel) => sliderPanel.getMaxValue()));
+    const maxMaxValueLength = Math.ceil(Math.log10(maxMaxValue));
+    this.dom.style.setProperty('--max-input-field-digits', `${maxMaxValueLength}`);
   }
 }
