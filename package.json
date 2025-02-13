@@ -1,7 +1,7 @@
 {
-  "name": "h5p-lisum",
+  "name": "h5p-choice-explorer",
   "version": "1.0.0",
-  "description": "H5P.Lisum (TODO)",
+  "description": "Let users explore how different choices affect the outcome of a scenario.",
   "private": true,
   "scripts": {
     "lint": "stylelint './src/**/*.scss' && eslint './src/**/*.js'",

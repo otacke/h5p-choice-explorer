@@ -1,6 +1,6 @@
 {
-  "title": "Lisum (DEMO)",
-  "description": "TODO",
+  "title": "ChoiceExplorer",
+  "description": "Let users explore how different choices affect the outcome of a scenario.",
   "majorVersion": 1,
   "minorVersion": 0,
   "patchVersion": 0,
@@ -11,18 +11,18 @@
     "majorVersion": 1,
     "minorVersion": 24
   },
-  "machineName": "H5P.Lisum",
+  "machineName": "H5P.ChoiceExplorer",
   "embedTypes": [
     "iframe"
   ],
   "preloadedJs": [
     {
-      "path": "dist/h5p-lisum.js"
+      "path": "dist/h5p-choice-explorer.js"
     }
   ],
   "preloadedCss": [
     {
-      "path": "dist/h5p-lisum.css"
+      "path": "dist/h5p-choice-explorer.css"
     }
   ],
   "preloadedDependencies": [
