@@ -33,14 +33,14 @@ export default class Main {
     ];
 
     this.options = [
-      { label: 'Beton', unit: 't', weights: [175, 96.6], max: 1000 },
+      { label: 'Beton', unit: 't', weights: [175, 96.6], min: 500, max: 1000 },
       { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
       { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
     ];
 
     this.options.forEach((option) => {
       this.sliderPanels[option.label] = new SliderPanel(
-        { label: option.label, unit: option.unit, max: option.max },
+        { label: option.label, unit: option.unit, min: option.min, max: option.max },
         {
           onValueChanged: () => {
             this.updateResults();

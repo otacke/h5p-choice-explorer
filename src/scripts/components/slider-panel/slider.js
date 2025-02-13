@@ -35,8 +35,8 @@ export default class Slider {
     this.slider = document.createElement('input');
     this.slider.classList.add('slider');
     this.slider.setAttribute('type', 'range');
-    this.slider.setAttribute('min', '0');
-    this.slider.setAttribute('aria-valuemin', '0');
+    this.slider.setAttribute('min', `${this.params.minValue}`);
+    this.slider.setAttribute('aria-valuemin', `${this.params.minValue}`);
     this.slider.setAttribute('max', `${this.params.maxValue}`);
     this.slider.setAttribute('aria-valuemax', `${this.params.maxValue}`);
     this.slider.setAttribute('step', '1');
@@ -68,7 +68,7 @@ export default class Slider {
 
     this.dom.append(this.slider);
 
-    this.setValue(0);
+    this.setValue(Math.max(this.params.minValue, 0));
   }
 
   /**
@@ -110,7 +110,7 @@ export default class Slider {
       return;
     }
 
-    const percentage = (value / this.params.maxValue) * 100;
+    const percentage = ((value - this.params.minValue) / (this.params.maxValue - this.params.minValue)) * 100;
 
     this.slider.style.background =
       `linear-gradient(to right, var(--color-primary-dark-80) ${percentage}%, var(--color-primary-15) ${percentage}%)`;
