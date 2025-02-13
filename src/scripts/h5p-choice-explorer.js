@@ -2,9 +2,9 @@ import Util from '@services/util.js';
 import Dictionary from '@services/dictionary.js';
 import { getSemanticsDefaults } from '@services/h5p-util.js';
 import Main from '@components/main.js';
-import '@styles/h5p-lisum.scss';
+import '@styles/h5p-choice-explorer.scss';
 
-export default class Lisum extends H5P.Question {
+export default class ChoiceExplorer extends H5P.Question {
   /**
    * @class
    * @param {object} params Parameters passed by the editor.
@@ -12,7 +12,7 @@ export default class Lisum extends H5P.Question {
    * @param {object} [extras] Saved state, metadata, etc.
    */
   constructor(params, contentId, extras = {}) {
-    super('lisum');
+    super('choice-explorer');
 
     this.params = this.sanitizeParameters(params);
     this.contentId = contentId;

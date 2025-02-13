@@ -1,4 +1,3 @@
-import Lisum from '@scripts/h5p-lisum.js';
+import ChoiceExplorer from '@scripts/h5p-choiceExplorer.js';
 
-// Load library
-H5P.Lisum = Lisum;
+H5P.ChoiceExplorer = ChoiceExplorer;

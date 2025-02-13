@@ -16,17 +16,17 @@ export default class Main {
     this.params = params;
 
     this.dom = document.createElement('div');
-    this.dom.classList.add('h5p-lisum-main');
+    this.dom.classList.add('h5p-choice-explorer-main');
 
     this.sliderPanels = {};
     this.resultsPanels = [];
 
     const slidersDOM = document.createElement('div');
-    slidersDOM.classList.add('h5p-lisum-slider-panels');
+    slidersDOM.classList.add('h5p-choice-explorer-slider-panels');
     this.dom.append(slidersDOM);
 
     const resultsDOM = document.createElement('div');
-    resultsDOM.classList.add('h5p-lisum-results-panels');
+    resultsDOM.classList.add('h5p-choice-explorer-results-panels');
     this.dom.append(resultsDOM);
 
     this.params.decisions.forEach((option) => {

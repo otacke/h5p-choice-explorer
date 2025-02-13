@@ -1,4 +1,4 @@
-.h5p-lisum-main {
+.h5p-choice-explorer-main {
   --max-input-field-digits: 5;
   --number-spinner-slack: calc(2ex + 15px);
   --input-field-width: calc(var(--max-input-field-digits) * 1ch + var(--number-spinner-slack));
@@ -8,13 +8,13 @@
   display: flex;
   flex-direction: column;
 
-  .h5p-lisum-slider-panels {
+  .h5p-choice-explorer-slider-panels {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
 
-  .h5p-lisum-results-panels {
+  .h5p-choice-explorer-results-panels {
     border-top: 1px solid var(--color-shadow-light);
     display: flex;
     flex-direction: column;
