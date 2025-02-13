@@ -76,14 +76,15 @@
       "label": "Decision parameters",
       "fields": [
         {
-          "name": "id",
-          "type": "text",
-          "label": "id"
-        },
-        {
           "name": "label",
           "type": "text",
           "label": "Label"
+        },
+        {
+          "name": "id",
+          "type": "text",
+          "label": "id",
+          "widget": "autouuid"
         },
         {
           "name": "unit",
@@ -128,14 +129,15 @@
       "label": "Target parameters",
       "fields": [
         {
-          "name": "id",
-          "type": "text",
-          "label": "id"
-        },
-        {
           "name": "label",
           "type": "text",
           "label": "Label"
+        },
+        {
+          "name": "id",
+          "type": "text",
+          "label": "id",
+          "widget": "autouuid"
         },
         {
           "name": "unit",

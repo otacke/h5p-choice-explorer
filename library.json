@@ -34,6 +34,11 @@
   ],
   "editorDependencies": [
     {
+      "machineName": "H5PEditor.ChoiceExplorer",
+      "majorVersion": 1,
+      "minorVersion": 0
+    },
+    {
       "machineName": "H5PEditor.VerticalTabs",
       "majorVersion": 1,
       "minorVersion": 3

@@ -23,16 +23,6 @@ export default class ChoiceExplorer extends H5P.Question {
 
     this.dictionary = new Dictionary().fill({ l10n: this.params.l10n, a11y: this.params.a11y });
 
-    // Assign weights to decisions
-    this.params.weights.forEach((weight) => {
-      const decisionIndex = this.params.decisions.findIndex((decision) => decision.id === weight.decisionId);
-      if (decisionIndex === -1) {
-        return; // TODO: This will probably need error handling even though it should never happen
-      }
-
-      this.params.decisions[decisionIndex].weights = weight.targets.map((target) => target.weight);
-    });
-
     this.main = new Main(this.params);
 
     this.setCurrentState(extras?.previousState ?? null);
@@ -111,6 +101,34 @@ export default class ChoiceExplorer extends H5P.Question {
 
   sanitizeParameters(params = {}) {
     const defaults = Util.extend({}, getSemanticsDefaults());
-    return Util.extend(defaults, params);
+    const sanitizedParams = Util.extend(defaults, params);
+
+    sanitizedParams.decisions = sanitizedParams.decisions.filter((decision) => decision.label);
+    sanitizedParams.targets = sanitizedParams.targets.filter((target) => target.label);
+
+    const decisionIds = sanitizedParams.decisions.map((decision) => decision.id);
+    const targetIds = sanitizedParams.targets.map((target) => target.id);
+    sanitizedParams.weights = sanitizedParams.weights
+      .filter((weight) => {
+        return decisionIds.includes(weight.decisionId) &&
+          weight.targets.every((target) => targetIds.includes(target.targetId));
+      })
+      .map((weight) => {
+        weight.targets = weight.targets.map((target) => {
+          target.weight = target.weight ?? 0;
+          return target;
+        });
+
+        return weight;
+      });
+
+    // Assign weights to decisions
+    sanitizedParams.weights.forEach((weight) => {
+      const decisionIndex = sanitizedParams.decisions.findIndex((decision) => decision.id === weight.decisionId);
+      sanitizedParams.decisions[decisionIndex].weights = weight.targets.map((target) => target.weight);
+    });
+
+
+    return sanitizedParams;
   }
 }
