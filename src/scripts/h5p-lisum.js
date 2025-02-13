@@ -22,17 +22,15 @@ export default class Lisum extends H5P.Question {
 
     this.previousState = extras?.previousState || {};
 
-    // Demo values
-    this.params.targets = [
-      { label: 'CO₂-Ausstoß', unit: 't', max: 100000 },
-      { label: 'Kosten', unit: '€', min: 50000, max: 100000 },
-    ];
-    this.params.options = [
-      { label: 'Beton', unit: 't', weights: [175, 96.6], max: 1000 },
-      { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
-      { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
-    ];
-    this.params.behaviour.givesLiveFeedback = true;
+    // Assign weights to decisions
+    this.params.weights.forEach((weight) => {
+      const decisionIndex = this.params.decisions.findIndex((decision) => decision.id === weight.decisionId);
+      if (decisionIndex === -1) {
+        return; // TODO: This will probably need error handling even though it should never happen
+      }
+
+      this.params.decisions[decisionIndex].weights = weight.targets.map((target) => target.weight);
+    });
 
     this.main = new Main(this.params);
   }

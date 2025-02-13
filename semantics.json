@@ -60,12 +60,168 @@
     ]
   },
   {
-    "name": "matrix",
-    "label": "Matrix",
+    "name": "decisions",
+    "label": "Decision parameters",
+    "type": "list",
+    "widgets": [
+      {
+        "name": "VerticalTabs",
+        "label": "Default"
+      }
+    ],
+    "min": 1,
+    "field": {
+      "name": "decisions",
+      "type": "group",
+      "label": "Decision parameters",
+      "fields": [
+        {
+          "name": "id",
+          "type": "text",
+          "label": "id"
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "label": "Label"
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "label": "Unit",
+          "optional": true
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "label": "Minimum value",
+          "decimals": 3,
+          "min": 0,
+          "optional": true
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "label": "Maximum value",
+          "decimals": 3,
+          "min": 0,
+          "optional": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "targets",
+    "label": "Target parameters",
+    "type": "list",
+    "widgets": [
+      {
+        "name": "VerticalTabs",
+        "label": "Default"
+      }
+    ],
+    "min": 1,
+    "max": 5,
+    "field": {
+      "name": "targets",
+      "type": "group",
+      "label": "Target parameters",
+      "fields": [
+        {
+          "name": "id",
+          "type": "text",
+          "label": "id"
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "label": "Label"
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "label": "Unit",
+          "optional": true
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "label": "Minimum value",
+          "decimals": 3,
+          "min": 0,
+          "optional": true
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "label": "Maximum value",
+          "decimals": 3,
+          "min": 0,
+          "optional": true
+        }
+      ]
+    }
+  },
+  {
+    "name": "weights",
+    "label": "Weights",
+    "type": "list",
+    "field": {
+      "name": "decision",
+      "type": "group",
+      "label": "Decision",
+      "fields": [
+        {
+          "name": "decisionId",
+          "type": "text",
+          "label": "Id"
+        },
+        {
+          "name": "targets",
+          "type": "list",
+          "label": "Targets",
+          "field": {
+            "name": "target",
+            "type": "group",
+            "label": "Target",
+            "fields": [
+              {
+                "name": "targetId",
+                "type": "text",
+                "label": "Id"
+              },
+              {
+                "name": "weight",
+                "type": "number",
+                "label": "Weight",
+                "decimals": 3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "behaviour",
     "type": "group",
-    "expanded": true,
-    "importance": "high",
-    "fields": []
+    "label": "Behavioural settings",
+    "importance": "low",
+    "description": "These options will let you control how the task behaves.",
+    "fields": [
+      {
+        "name": "givesLiveFeedback",
+        "type": "boolean",
+        "label": "Give live feedback",
+        "description": "If checked, the target values will be highlighted indicating whether they are in range or not."
+      },
+      {
+        "name": "dummy",
+        "type": "boolean",
+        "label": "Dummy",
+        "widget": "none"
+      }
+    ]
   },
   {
     "name": "l10n",

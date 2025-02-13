@@ -29,7 +29,7 @@ export default class Main {
     resultsDOM.classList.add('h5p-lisum-results-panels');
     this.dom.append(resultsDOM);
 
-    this.params.options.forEach((option) => {
+    this.params.decisions.forEach((option) => {
       this.sliderPanels[option.label] = new SliderPanel(
         { label: option.label, unit: option.unit, min: option.min, max: option.max },
         {
@@ -58,10 +58,10 @@ export default class Main {
       resultsDOM.append(resultsPanel.getDOM());
     });
 
-    const maxLabelLength = Math.max(...this.params.options.map((option) => (option.label ?? '').length));
+    const maxLabelLength = Math.max(...this.params.decisions.map((option) => (option.label ?? '').length));
     this.dom.style.setProperty('--label-width', `${maxLabelLength}ch`);
 
-    const units = this.params.options
+    const units = this.params.decisions
       .map((option) => option.unit)
       .concat(this.params.targets.map((target) => target.unit));
     const maxUnitLength = Math.max(...units.map((unit) => (unit ?? '').length));
@@ -86,7 +86,7 @@ export default class Main {
     let maxMaxValue = 0;
 
     this.resultsPanels.forEach((resultsPanel, index) => {
-      const resultValue = this.params.options.reduce((acc, option) => {
+      const resultValue = this.params.decisions.reduce((acc, option) => {
         const weight = option.weights[index];
         const value = this.sliderPanels[option.label].getValue();
         return acc + weight * value;
