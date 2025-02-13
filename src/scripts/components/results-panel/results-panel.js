@@ -7,8 +7,13 @@ export default class ResultsPanel {
    * @param {object} params Parameters.
    * @param {string} [params.label] Label for panel.
    * @param {string} [params.unit] Unit for panel.
+   * @param {number} [params.min] Minimum desired value.
+   * @param {number} [params.max] Maximumum desired value.
+   * @param {boolean} [params.givesLiveFeedback] Whether to give live feedback.
    */
   constructor(params = {}) {
+    this.params = params;
+
     this.dom = document.createElement('div');
     this.dom.classList.add('results-panel-container');
 
@@ -51,5 +56,31 @@ export default class ResultsPanel {
     }
 
     this.result.value = value;
+
+    this.giveFeedback();
+  }
+
+  /**
+   * Give feedback.
+   */
+  giveFeedback() {
+    if (this.params.givesLiveFeedback) {
+      const isInRange = this.isWithinRange(parseInt(this.result.value));
+      this.result.classList.toggle('correct', isInRange);
+      this.result.classList.toggle('wrong', !isInRange);
+    }
+  }
+
+  /**
+   * Check if value is within range.
+   * @param {number} value Value to check.
+   * @returns {boolean} Whether value is within range.
+   */
+  isWithinRange(value) {
+    const isValidNumber = typeof value === 'number' && !isNaN(value);
+    const isAboveMin = typeof this.params.min !== 'number' || value >= this.params.min;
+    const isBelowMax = typeof this.params.max !== 'number' || value <= this.params.max;
+
+    return isValidNumber && isAboveMin && isBelowMax;
   }
 }

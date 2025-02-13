@@ -17,14 +17,26 @@
     }
 
     .results-panel-value {
+      font-weight: bold;
+      justify-self: end;
+      width: var(--results-field-width);
+
       &::-webkit-outer-spin-button,
       &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
       }
       -moz-appearance: textfield;
-      justify-self: end;
-      width: var(--results-field-width);
+
+      &.correct {
+        border: 2px solid var(--color-correct);
+        color: var(--color-correct);
+      }
+
+      &.wrong {
+        border: 2px solid var(--color-wrong);
+        color: var(--color-wrong);
+      }
     }
   }
 }

@@ -13,6 +13,8 @@ export default class Main {
    * @param {object} callbacks Callbacks.
    */
   constructor(params = {}, callbacks = {}) {
+    this.params = params;
+
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-lisum-main');
 
@@ -27,18 +29,7 @@ export default class Main {
     resultsDOM.classList.add('h5p-lisum-results-panels');
     this.dom.append(resultsDOM);
 
-    const targets = [
-      { label: 'CO₂-Ausstoß', unit: 't' },
-      { label: 'Kosten', unit: '€' }
-    ];
-
-    this.options = [
-      { label: 'Beton', unit: 't', weights: [175, 96.6], min: 500, max: 1000 },
-      { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
-      { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
-    ];
-
-    this.options.forEach((option) => {
+    this.params.options.forEach((option) => {
       this.sliderPanels[option.label] = new SliderPanel(
         { label: option.label, unit: option.unit, min: option.min, max: option.max },
         {
@@ -53,18 +44,26 @@ export default class Main {
       slidersDOM.append(this.sliderPanels[option.label].getDOM());
     });
 
-    targets.forEach((target) => {
+    this.params.targets.forEach((target) => {
       const resultsPanel = new ResultsPanel(
-        { label: target.label, unit: target.unit }
+        {
+          label: target.label,
+          unit: target.unit,
+          min: target.min,
+          max: target.max,
+          givesLiveFeedback: this.params.behaviour.givesLiveFeedback
+        }
       );
       this.resultsPanels.push(resultsPanel);
       resultsDOM.append(resultsPanel.getDOM());
     });
 
-    const maxLabelLength = Math.max(...this.options.map((option) => (option.label ?? '').length));
+    const maxLabelLength = Math.max(...this.params.options.map((option) => (option.label ?? '').length));
     this.dom.style.setProperty('--label-width', `${maxLabelLength}ch`);
 
-    const units = this.options.map((option) => option.unit).concat(targets.map((target) => target.unit));
+    const units = this.params.options
+      .map((option) => option.unit)
+      .concat(this.params.targets.map((target) => target.unit));
     const maxUnitLength = Math.max(...units.map((unit) => (unit ?? '').length));
     this.dom.style.setProperty('--unit-width', `${maxUnitLength}ch`);
 
@@ -87,7 +86,7 @@ export default class Main {
     let maxMaxValue = 0;
 
     this.resultsPanels.forEach((resultsPanel, index) => {
-      const resultValue = this.options.reduce((acc, option) => {
+      const resultValue = this.params.options.reduce((acc, option) => {
         const weight = option.weights[index];
         const value = this.sliderPanels[option.label].getValue();
         return acc + weight * value;

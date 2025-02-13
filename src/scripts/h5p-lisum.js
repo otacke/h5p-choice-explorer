@@ -22,7 +22,19 @@ export default class Lisum extends H5P.Question {
 
     this.previousState = extras?.previousState || {};
 
-    this.main = new Main();
+    // Demo values
+    this.params.targets = [
+      { label: 'CO₂-Ausstoß', unit: 't', max: 100000 },
+      { label: 'Kosten', unit: '€', min: 50000, max: 100000 },
+    ];
+    this.params.options = [
+      { label: 'Beton', unit: 't', weights: [175, 96.6], max: 1000 },
+      { label: 'Fichtenholz', unit: 't', weights: [75, 963.6], max: 1000 },
+      { label: 'Lehmziegel', unit: 't', weights: [25, 303.1] },
+    ];
+    this.params.behaviour.givesLiveFeedback = true;
+
+    this.main = new Main(this.params);
   }
 
   /**
