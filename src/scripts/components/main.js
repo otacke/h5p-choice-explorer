@@ -30,10 +30,11 @@ export default class Main {
     this.dom.append(resultsDOM);
 
     this.params.decisions.forEach((option) => {
-      this.sliderPanels[option.label] = new SliderPanel(
+      this.sliderPanels[option.id] = new SliderPanel(
         { label: option.label, unit: option.unit, min: option.min, max: option.max },
         {
           onValueChanged: () => {
+            this.wasAnswerGiven = true;
             this.updateResults();
           },
           onMaxValueChanged: () => {
@@ -41,7 +42,7 @@ export default class Main {
           }
         }
       );
-      slidersDOM.append(this.sliderPanels[option.label].getDOM());
+      slidersDOM.append(this.sliderPanels[option.id].getDOM());
     });
 
     this.params.targets.forEach((target) => {
@@ -88,7 +89,7 @@ export default class Main {
     this.resultsPanels.forEach((resultsPanel, index) => {
       const resultValue = this.params.decisions.reduce((acc, option) => {
         const weight = option.weights[index];
-        const value = this.sliderPanels[option.label].getValue();
+        const value = this.sliderPanels[option.id].getValue();
         return acc + weight * value;
       }, 0);
 
@@ -103,5 +104,56 @@ export default class Main {
     const maxMaxValue = Math.max(...Object.values(this.sliderPanels).map((sliderPanel) => sliderPanel.getMaxValue()));
     const maxMaxValueLength = Math.ceil(Math.log10(maxMaxValue));
     this.dom.style.setProperty('--max-input-field-digits', `${maxMaxValueLength}`);
+  }
+
+  /**
+   * Determine whether the task was answered already.
+   * @returns {boolean} True if answer was given by user, else false.
+   * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-1}
+   */
+  getAnswerGiven() {
+    return this.wasAnswerGiven ?? false;
+  }
+
+  /**
+   * Reset.
+   * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-5}
+   */
+  reset() {
+    Object.values(this.sliderPanels).forEach((sliderPanel) => {
+      sliderPanel.reset();
+    });
+
+    this.updateResults();
+
+    this.wasAnswerGiven = false;
+  }
+
+  /**
+   * Get current state.
+   * @returns {object} Current state to be retrieved later.
+   * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-7}
+   */
+  getCurrentState() {
+    return {
+      decisions: Object.entries(this.sliderPanels).map(([id, sliderPanel]) => ({ id, value: sliderPanel.getValue() }))
+    };
+  }
+
+  /**
+   * Set current state.
+   * @param {object} state State to set, must match return value structure of getCurrentState.
+   */
+  setCurrentState(state) {
+    if (state.decisions.length === 0) {
+      return;
+    }
+
+    state.decisions.forEach(({ id, value }) => {
+      this.sliderPanels[id].setValue(value);
+    });
+
+    this.wasAnswerGiven = true;
+    this.updateResults();
   }
 }

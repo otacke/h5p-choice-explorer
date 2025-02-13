@@ -1,5 +1,6 @@
 import Util from '@services/util.js';
 import Dictionary from '@services/dictionary.js';
+import QuestionTypeContract from '@mixins/question-type-contract.js';
 import { getSemanticsDefaults } from '@services/h5p-util.js';
 import Main from '@components/main.js';
 import '@styles/h5p-choice-explorer.scss';
@@ -14,13 +15,13 @@ export default class ChoiceExplorer extends H5P.Question {
   constructor(params, contentId, extras = {}) {
     super('choice-explorer');
 
+    Util.addMixins(ChoiceExplorer, [QuestionTypeContract]);
+
     this.params = this.sanitizeParameters(params);
     this.contentId = contentId;
     this.extras = extras;
 
     this.dictionary = new Dictionary().fill({ l10n: this.params.l10n, a11y: this.params.a11y });
-
-    this.previousState = extras?.previousState || {};
 
     // Assign weights to decisions
     this.params.weights.forEach((weight) => {
@@ -33,6 +34,8 @@ export default class ChoiceExplorer extends H5P.Question {
     });
 
     this.main = new Main(this.params);
+
+    this.setCurrentState(extras?.previousState ?? null);
   }
 
   /**
@@ -72,6 +75,38 @@ export default class ChoiceExplorer extends H5P.Question {
     else if (machineName === 'H5P.Audio' && media.params?.files) {
       this.setAudio(media);
     }
+  }
+
+  /**
+   * Set current state.
+   * @param {object} state State to set, must match return value structure of getCurrentState.
+   */
+  setCurrentState(state) {
+    this.main.setCurrentState(this.sanitizeState(state));
+  }
+
+  /**
+   * Sanitize state.
+   * @param {object} [state] State to sanitize.
+   * @returns {object} Sanitized state.
+   */
+  sanitizeState(state) {
+    const newState = { decisions: [] };
+
+    const isStateValid = typeof state === 'object' && state !== null && Array.isArray(state.decisions);
+    if (isStateValid) {
+      state.decisions.forEach(({ id, value }) => {
+
+        const isIdValid = typeof id === 'string' && this.params.decisions.some((decision) => decision.id === id);
+        const isValueValid = typeof value === 'number' && value >= 0;
+
+        if (isIdValid && isValueValid) {
+          newState.decisions.push({ id, value });
+        }
+      });
+    }
+
+    return newState;
   }
 
   sanitizeParameters(params = {}) {

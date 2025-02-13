@@ -102,4 +102,11 @@ export default class InputField {
   handleBlur() {
     this.callbacks.onBlur(parseFloat(this.dom.value));
   }
+
+  /**
+   * Reset input.
+   */
+  reset() {
+    this.setValue(this.params.min);
+  }
 }

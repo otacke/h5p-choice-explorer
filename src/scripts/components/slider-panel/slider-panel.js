@@ -111,6 +111,15 @@ export default class SliderPanel {
   }
 
   /**
+   * Set value.
+   * @param {number} value Value.
+   */
+  setValue(value) {
+    this.slider.setValue(value);
+    this.input.setValue(value);
+  }
+
+  /**
    * Get max value.
    * @returns {number} Max value.
    */
@@ -179,5 +188,13 @@ export default class SliderPanel {
     if (typeof value !== 'number' || isNaN(value) || value < this.params.min || value > this.params.max) {
       this.input.setValue(this.slider.getValue());
     }
+  }
+
+  /**
+   * Reset panel.
+   */
+  reset() {
+    this.slider.reset();
+    this.input.reset();
   }
 }

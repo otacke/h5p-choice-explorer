@@ -145,6 +145,13 @@ export default class Slider {
   }
 
   /**
+   * Reset.
+   */
+  reset() {
+    this.setValue(this.params.minValue);
+  }
+
+  /**
    * Handle keyboard event.
    * @param {KeyboardEvent} event Keyboard event.
    * @returns {boolean} True if key was handled, false otherwise.
