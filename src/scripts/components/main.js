@@ -100,8 +100,9 @@ export default class Main {
         return acc + weight * value;
       }, 0);
 
-      resultsPanel.setValue(Math.round(resultValue));
-      maxMaxValue = Math.max(maxMaxValue, Math.ceil(resultValue.toString().length));
+      const roundedResultValue = Math.round(resultValue);
+      resultsPanel.setValue(roundedResultValue);
+      maxMaxValue = Math.max(maxMaxValue, Math.ceil(roundedResultValue.toString().length));
     });
 
     this.dom.style.setProperty('--max-result-digits', `${maxMaxValue}`);
