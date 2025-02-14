@@ -25,6 +25,7 @@ export default class InputField {
 
     this.dom = document.createElement('input');
     this.dom.classList.add('slider-panel-input');
+    this.dom.setAttribute('aria-labelledby', this.params.ariaLabelUUID);
     this.dom.setAttribute('type', 'number');
     this.dom.setAttribute('min', `${params.min}`);
     this.dom.value = Math.max(params.min, Math.min(0, params.max ?? 0));

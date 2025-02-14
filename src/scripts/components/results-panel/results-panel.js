@@ -21,15 +21,20 @@ export default class ResultsPanel {
     panel.classList.add('results-panel');
     this.dom.append(panel);
 
-    const resultLabel = document.createElement('div');
+    const uuid = H5P.createUUID();
+
+    const resultLabel = document.createElement('label');
     resultLabel.classList.add('results-panel-label');
+    resultLabel.setAttribute('for', uuid);
     resultLabel.textContent = params.label ?? '';
     panel.append(resultLabel);
 
     this.result = document.createElement('input');
+    this.result.setAttribute('id', uuid);
     this.result.classList.add('results-panel-value');
+    this.result.setAttribute('tabindex', '-1');
     this.result.setAttribute('type', 'number');
-    this.result.setAttribute('disabled', 'disabled');
+    this.result.setAttribute('readonly', 'readonly');
     panel.append(this.result);
 
     const resultUnit = document.createElement('div');

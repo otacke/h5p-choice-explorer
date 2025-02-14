@@ -34,6 +34,7 @@ export default class Slider {
 
     this.slider = document.createElement('input');
     this.slider.classList.add('slider');
+    this.slider.setAttribute('aria-labelledby', this.params.ariaLabelUUID);
     this.slider.setAttribute('type', 'range');
     this.slider.setAttribute('min', `${this.params.minValue}`);
     this.slider.setAttribute('aria-valuemin', `${this.params.minValue}`);

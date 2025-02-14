@@ -101,7 +101,7 @@ export default class Main {
       }, 0);
 
       resultsPanel.setValue(Math.round(resultValue));
-      maxMaxValue = Math.max(maxMaxValue,  Math.ceil(Math.log10(Math.round(resultValue))));
+      maxMaxValue = Math.max(maxMaxValue, Math.ceil(resultValue.toString().length));
     });
 
     this.dom.style.setProperty('--max-result-digits', `${maxMaxValue}`);

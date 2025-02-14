@@ -17,8 +17,13 @@
     }
 
     .results-panel-value {
+      background-color: var(--color-disabled-light);
+      border: 1px solid var(--color-disabled);
+      border-radius: 0.125rem;
       font-weight: bold;
       justify-self: end;
+      pointer-events: none;
+      text-align: end;
       width: var(--results-field-width);
 
       &::-webkit-outer-spin-button,

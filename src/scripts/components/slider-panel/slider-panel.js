@@ -38,8 +38,11 @@ export default class SliderPanel {
     panel.classList.add('slider-panel');
     this.dom.append(panel);
 
+    const uuid = H5P.createUUID();
+
     const label = document.createElement('label');
     label.classList.add('slider-panel-label');
+    label.setAttribute('id', uuid);
     label.textContent = this.params.label;
     panel.append(label);
 
@@ -47,7 +50,7 @@ export default class SliderPanel {
       {
         minValue: this.params.min,
         maxValue: this.params.max || this.dynamicMaxValue,
-        ariaLabel: 'TODO' // TODO: Combination of slider and option name
+        ariaLabelUUID: uuid
       },
       {
         onSeeked: (value) => {
@@ -66,7 +69,8 @@ export default class SliderPanel {
       {
         min: this.params.min,
         max: this.params.max,
-        baseMax: this.dynamicMaxValue
+        baseMax: this.dynamicMaxValue,
+        ariaLabelUUID: uuid
       }, {
         onInput: (value) => {
           this.handleInputInput(value);

@@ -3,7 +3,7 @@
   --number-spinner-slack: calc(2ex + 15px);
   --input-field-width: calc(var(--max-input-field-digits) * 1ch + var(--number-spinner-slack));
   --max-result-digits: 5;
-  --results-field-width: max(var(--input-field-width), calc(var(--max-result-digits) * 1ch));
+  --results-field-width: max(var(--input-field-width), calc((1 + var(--max-result-digits)) * 1ch));
 
   display: flex;
   flex-direction: column;
