@@ -26,7 +26,7 @@ export default class ResultsPanel {
     const resultLabel = document.createElement('label');
     resultLabel.classList.add('results-panel-label');
     resultLabel.setAttribute('for', uuid);
-    resultLabel.textContent = params.label ?? '';
+    resultLabel.textContent = this.params.label ?? '';
     panel.append(resultLabel);
 
     this.result = document.createElement('input');
@@ -39,7 +39,7 @@ export default class ResultsPanel {
 
     const resultUnit = document.createElement('div');
     resultUnit.classList.add('results-panel-unit');
-    resultUnit.textContent = params.unit ?? '';
+    resultUnit.textContent = this.params.unit ?? '';
     panel.append(resultUnit);
   }
 
@@ -61,6 +61,7 @@ export default class ResultsPanel {
     }
 
     this.result.value = value;
+    this.result.setAttribute('aria-valuetext', `${value} ${this.params.unit}`);
 
     this.giveFeedback();
   }

@@ -69,6 +69,7 @@ export default class SliderPanel {
       {
         min: this.params.min,
         max: this.params.max,
+        unit: this.params.unit,
         baseMax: this.dynamicMaxValue,
         ariaLabelUUID: uuid
       }, {
