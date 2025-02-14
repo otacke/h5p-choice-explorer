@@ -1,0 +1,13 @@
+.h5p-game-map-message-box {
+  background-color: var(--color-hint-message-background);
+  border: 1px solid var(--color-hint-message-border);
+  box-sizing: border-box;
+  color: var(--color-hint-message-text);
+  font-size: .8em;
+  padding: .8em;
+
+  .h5p-game-map-message-box-message {
+    margin: 0;
+    text-align: center;
+  }
+}

@@ -166,8 +166,10 @@
   },
   {
     "name": "weights",
-    "label": "Weights",
     "type": "list",
+    "label": "Weights",
+    "description": "For each decision item, set how much 1 unit of the decision item affects each of the target items.",
+    "widget": "choiceexplorerweights",
     "field": {
       "name": "decision",
       "type": "group",
@@ -232,39 +234,15 @@
     "common": true,
     "fields": [
       {
-        "name": "sample",
+        "name": "missingParameters",
         "type": "text",
-        "label": "Sample entry for visible user interface strings",
-        "description": "This is just a sample entry for visible user interface strings.",
-        "default": "Sample l10n"
+        "label": "Missing parameters",
+        "default": "There are missing decision parameters and/or target parameters."
       },
       {
         "name": "dummy",
-        "type": "text",
+        "type": "boolean",
         "label": "Dummy",
-        "default": "Dummy",
-        "widget": "none"
-      }
-    ]
-  },
-  {
-    "name": "a11y",
-    "type": "group",
-    "label": "Accessibility texts",
-    "common": true,
-    "fields": [
-      {
-        "name": "sample",
-        "type": "text",
-        "label": "Sample entry for accessibility strings",
-        "description": "This is just a sample entry for accessibility strings.",
-        "default": "Sample a11y"
-      },
-      {
-        "name": "dummy",
-        "type": "text",
-        "label": "Dummy",
-        "default": "Dummy",
         "widget": "none"
       }
     ]

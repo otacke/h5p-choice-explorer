@@ -21,9 +21,10 @@ export default class ChoiceExplorer extends H5P.Question {
     this.contentId = contentId;
     this.extras = extras;
 
-    this.dictionary = new Dictionary().fill({ l10n: this.params.l10n, a11y: this.params.a11y });
+    this.dictionary = new Dictionary();
+    this.dictionary.fill({ l10n: this.params.l10n });
 
-    this.main = new Main(this.params);
+    this.main = new Main({ ...this.params, dictionary: this.dictionary });
 
     this.setCurrentState(extras?.previousState ?? null);
   }
@@ -69,7 +70,7 @@ export default class ChoiceExplorer extends H5P.Question {
 
   /**
    * Set current state.
-   * @param {object} state State to set, must match return value structure of getCurrentState.
+   * @param {object|undefined} state State to set, must match return value structure of getCurrentState.
    */
   setCurrentState(state) {
     this.main.setCurrentState(this.sanitizeState(state));

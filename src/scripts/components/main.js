@@ -1,3 +1,4 @@
+import MessageBox from '@components/message-box/message-box.js';
 import SliderPanel from './slider-panel/slider-panel.js';
 import ResultsPanel from './results-panel/results-panel.js';
 import './main.scss';
@@ -17,6 +18,12 @@ export default class Main {
 
     this.dom = document.createElement('div');
     this.dom.classList.add('h5p-choice-explorer-main');
+
+    if (this.params.decisions.length === 0 || this.params.targets.length === 0) {
+      const messageBox = new MessageBox({ text: params.dictionary.get('l10n.missingParameters') });
+      this.dom.append(messageBox.getDOM());
+      return;
+    }
 
     this.sliderPanels = {};
     this.resultsPanels = [];
@@ -120,6 +127,10 @@ export default class Main {
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-5}
    */
   reset() {
+    if (!this.sliderPanels) {
+      return;
+    }
+
     Object.values(this.sliderPanels).forEach((sliderPanel) => {
       sliderPanel.reset();
     });
@@ -131,10 +142,14 @@ export default class Main {
 
   /**
    * Get current state.
-   * @returns {object} Current state to be retrieved later.
+   * @returns {object|undefined} Current state to be retrieved later.
    * @see contract at {@link https://h5p.org/documentation/developers/contracts#guides-header-7}
    */
   getCurrentState() {
+    if (!this.sliderPanels) {
+      return;
+    }
+
     return {
       decisions: Object.entries(this.sliderPanels).map(([id, sliderPanel]) => ({ id, value: sliderPanel.getValue() }))
     };
