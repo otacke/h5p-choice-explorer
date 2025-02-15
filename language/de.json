@@ -1,0 +1,127 @@
+{
+  "semantics": [
+    {
+      "label": "Medium",
+      "fields": [
+        {
+          "label": "Typ",
+          "description": "Medium, das wahlweise oberhalb der Aufgabe angezeigt wird."
+        },
+        {
+          "label": "Bild-Zoom deaktivieren"
+        }
+      ]
+    },
+    {
+      "label": "Aufgabenbeschreibung",
+      "description": "Beschreibe die Aufgabe für die Lernenden."
+    },
+    {
+      "label": "Entscheidungsparameter",
+      "widgets": [
+        {
+          "label": "Vorgabe"
+        }
+      ],
+      "field": {
+        "label": "Entscheidungsparameter",
+        "fields": [
+          {
+            "label": "Beschriftung"
+          },
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Einheit"
+          },
+          {
+            "label": "Minimaler Wert"
+          },
+          {
+            "label": "Maximaler Wert"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Zielparameter",
+      "widgets": [
+        {
+          "label": "Vorgabe"
+        }
+      ],
+      "field": {
+        "label": "Zielparameter",
+        "fields": [
+          {
+            "label": "Beschriftung"
+          },
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Einheit"
+          },
+          {
+            "label": "Minimaler Wert"
+          },
+          {
+            "label": "Maximaler Wert"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Gewichtungen",
+      "description": "Lege für jeden Entscheidungsparameter fest, wie stark 1 Einheit des Entscheidungsparameters jeden der Zielparameter beeinflusst.",
+      "field": {
+        "label": "Entscheidung",
+        "fields": [
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Ziele",
+            "field": {
+              "label": "Ziel",
+              "fields": [
+                {
+                  "label": "Id"
+                },
+                {
+                  "label": "Gewichtung"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Verhaltenseinstellungen",
+      "description": "Diese Optionen legen fest, wie der Kalender im Detail funktioniert.",
+      "fields": [
+        {
+          "label": "Maximale Anzahl an Entscheidungs-Items insgesamt"
+        },
+        {
+          "label": "Gib Live-Rückmeldung",
+          "description": "Wenn aktiviert, werden die Zielwerte hervorgehoben, um anzuzeigen, ob sie im Bereich liegen oder nicht."
+        }
+      ]
+    },
+    {
+      "label": "Bedienoberfläche",
+      "fields": [
+        {
+          "label": "Fehlende Parameter",
+          "default": "Es fehlen Entscheidungsparameter und/oder Zielparameter."
+        },
+        {
+          "label": "Dummy"
+        }
+      ]
+    }
+  ]
+}

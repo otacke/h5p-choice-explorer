@@ -43,7 +43,7 @@
     "type": "text",
     "widget": "html",
     "importance": "high",
-    "description": "Describe your task here.",
+    "description": "Describe the task for the learners",
     "enterMode": "div",
     "tags": [
       "strong",
@@ -81,9 +81,9 @@
           "label": "Label"
         },
         {
-          "name": "id",
+          "name": "Id",
           "type": "text",
-          "label": "id",
+          "label": "Id",
           "widget": "autouuid"
         },
         {
@@ -134,9 +134,9 @@
           "label": "Label"
         },
         {
-          "name": "id",
+          "name": "Id",
           "type": "text",
-          "label": "id",
+          "label": "Id",
           "widget": "autouuid"
         },
         {

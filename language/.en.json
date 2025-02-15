@@ -1,0 +1,127 @@
+{
+  "semantics": [
+    {
+      "label": "Media",
+      "fields": [
+        {
+          "label": "Type",
+          "description": "Optional media to display above the question."
+        },
+        {
+          "label": "Disable image zooming"
+        }
+      ]
+    },
+    {
+      "label": "Task description",
+      "description": "Describe the task for the learners"
+    },
+    {
+      "label": "Decision parameters",
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "field": {
+        "label": "Decision parameters",
+        "fields": [
+          {
+            "label": "Label"
+          },
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Unit"
+          },
+          {
+            "label": "Minimum value"
+          },
+          {
+            "label": "Maximum value"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Target parameters",
+      "widgets": [
+        {
+          "label": "Default"
+        }
+      ],
+      "field": {
+        "label": "Target parameters",
+        "fields": [
+          {
+            "label": "Label"
+          },
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Unit"
+          },
+          {
+            "label": "Minimum value"
+          },
+          {
+            "label": "Maximum value"
+          }
+        ]
+      }
+    },
+    {
+      "label": "Weights",
+      "description": "For each decision item, set how much 1 unit of the decision item affects each of the target items.",
+      "field": {
+        "label": "Decision",
+        "fields": [
+          {
+            "label": "Id"
+          },
+          {
+            "label": "Targets",
+            "field": {
+              "label": "Target",
+              "fields": [
+                {
+                  "label": "Id"
+                },
+                {
+                  "label": "Weight"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "label": "Behavioural settings",
+      "description": "These options will let you control how the task behaves.",
+      "fields": [
+        {
+          "label": "Maximum number of decision items in total"
+        },
+        {
+          "label": "Give live feedback",
+          "description": "If checked, the target values will be highlighted indicating whether they are in range or not."
+        }
+      ]
+    },
+    {
+      "label": "User interface",
+      "fields": [
+        {
+          "label": "Missing parameters",
+          "default": "There are missing decision parameters and/or target parameters."
+        },
+        {
+          "label": "Dummy"
+        }
+      ]
+    }
+  ]
+}
