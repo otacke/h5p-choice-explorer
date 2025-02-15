@@ -37,12 +37,23 @@ export default class Main {
     this.dom.append(resultsDOM);
 
     this.params.decisions.forEach((option) => {
+      let max = option.max;
+      if (typeof this.params.behaviour.maxTotalDecisions === 'number') {
+        max = Math.min(option.max ?? Infinity, this.params.behaviour.maxTotalDecisions);
+      }
+
       this.sliderPanels[option.id] = new SliderPanel(
-        { label: option.label, unit: option.unit, min: option.min, max: option.max },
+        {
+          label: option.label,
+          unit: option.unit,
+          min: option.min,
+          max: max,
+        },
         {
           onValueChanged: () => {
             this.wasAnswerGiven = true;
             this.updateResults();
+            this.updateMaxDragValues(option.id);
           },
           onMaxValueChanged: () => {
             this.updateInputfieldsWidth();
@@ -77,6 +88,9 @@ export default class Main {
 
     this.updateInputfieldsWidth();
     this.updateResults();
+    window.requestAnimationFrame(() => {
+      this.updateMaxDragValues();
+    });
   }
 
   /**
@@ -106,6 +120,30 @@ export default class Main {
     });
 
     this.dom.style.setProperty('--max-result-digits', `${maxMaxValue}`);
+  }
+
+  /**
+   * Update the maximum drag values of all sliders.
+   * @param {string} [currentSliderId] The ID of the slider that was changed.
+   */
+  updateMaxDragValues(currentSliderId) {
+    if (typeof this.params.behaviour.maxTotalDecisions !== 'number') {
+      return;
+    }
+
+    const totalDecisionValue = Object.values(this.sliderPanels).reduce((acc, sliderPanel) => {
+      return acc + sliderPanel.getValue();
+    }, 0);
+    const availableMaxValue = this.params.behaviour.maxTotalDecisions - totalDecisionValue;
+
+    for (let id in this.sliderPanels) {
+      if (id === currentSliderId) {
+        continue;
+      }
+
+      const currentValue = this.sliderPanels[id].getValue();
+      this.sliderPanels[id].setMaxDragValue(currentValue + availableMaxValue);
+    }
   }
 
   updateInputfieldsWidth() {

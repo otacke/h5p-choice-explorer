@@ -133,6 +133,21 @@ export default class SliderPanel {
   }
 
   /**
+   * Set the maximum value that the slider can be dragged to.
+   * @param {number} value Maximum value.
+   */
+  setMaxDragValue(value) {
+    this.dynamicMaxValue = value;
+
+    this.slider.setDragMaxValue(value);
+    this.input.setMaxValue(value);
+  }
+
+  getId() {
+    return this.params.id;
+  }
+
+  /**
    * Compute next max value from base value scaled by the power of 10.
    * @param {number} value Current value.
    * @param {number} [base] Base value.
@@ -167,7 +182,7 @@ export default class SliderPanel {
       this.dynamicMaxValue = nextMaxValue;
       this.slider.setMaxValue(this.dynamicMaxValue);
       this.callbacks.onMaxValueChanged();
-      this.slider.setValue(value);
+      // this.slider.setValue(value);
     }
   }
 

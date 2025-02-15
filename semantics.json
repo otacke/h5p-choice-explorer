@@ -212,16 +212,17 @@
     "description": "These options will let you control how the task behaves.",
     "fields": [
       {
+        "name": "maxTotalDecisions",
+        "type": "number",
+        "label": "Maximum number of decision items in total",
+        "optional": true,
+        "min": 0
+      },
+      {
         "name": "givesLiveFeedback",
         "type": "boolean",
         "label": "Give live feedback",
         "description": "If checked, the target values will be highlighted indicating whether they are in range or not."
-      },
-      {
-        "name": "dummy",
-        "type": "boolean",
-        "label": "Dummy",
-        "widget": "none"
       }
     ]
   },

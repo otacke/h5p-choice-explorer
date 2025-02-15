@@ -69,7 +69,7 @@ export default class Slider {
 
     this.dom.append(this.slider);
 
-    this.setValue(Math.max(this.params.minValue, 0));
+    this.reset();
   }
 
   /**
@@ -143,13 +143,27 @@ export default class Slider {
     this.params.maxValue = maxValue;
     this.slider.setAttribute('max', `${maxValue}`);
     this.slider.setAttribute('aria-valuemax', `${maxValue}`);
+
+    // Update the rendering of the slider.
+    this.setValue(this.getValue());
+  }
+
+  /**
+   * Set the maximum value that the slider can be dragged to.
+   * @param {number} dragMaxValue Maximum value that the slider can be dragged to.
+   */
+  setDragMaxValue(dragMaxValue) {
+    this.dragMaxValue = dragMaxValue;
   }
 
   /**
    * Reset.
    */
   reset() {
-    this.setValue(this.params.minValue);
+    if (typeof this.params.maxValue === 'number') {
+      this.setMaxValue(this.params.maxValue);
+    }
+    this.setValue(Math.max(this.params.minValue, 0));
   }
 
   /**
@@ -210,6 +224,10 @@ export default class Slider {
   handleSliderSeeked(value) {
     if (!this.isSeeking) {
       return; // Workaround for Firefox, would otherwise trigger 'input event' => sliderSeeked after sliderEnded.
+    }
+
+    if (typeof this.dragMaxValue === 'number') {
+      value = Math.min(value, this.dragMaxValue);
     }
 
     this.callbacks.onSeeked(value);

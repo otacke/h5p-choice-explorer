@@ -93,9 +93,14 @@ export default class InputField {
    * Handle user input.
    */
   handleInput() {
-    const value = parseFloat(this.dom.value);
+    let value = parseFloat(this.dom.value);
+
     if (typeof value !== 'number' || isNaN(value) || value < this.params.min) {
       return;
+    }
+
+    if (value > parseFloat(this.dom.max)) {
+      value = parseFloat(this.dom.max);
     }
 
     this.dom.setAttribute('aria-valuetext', `${value} ${this.params.unit}`);
