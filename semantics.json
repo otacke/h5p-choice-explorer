@@ -81,7 +81,7 @@
           "label": "Label"
         },
         {
-          "name": "Id",
+          "name": "id",
           "type": "text",
           "label": "Id",
           "widget": "autouuid"
@@ -134,7 +134,7 @@
           "label": "Label"
         },
         {
-          "name": "Id",
+          "name": "id",
           "type": "text",
           "label": "Id",
           "widget": "autouuid"
