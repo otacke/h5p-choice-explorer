@@ -119,7 +119,8 @@
           "default": "There are missing decision parameters and/or target parameters."
         },
         {
-          "label": "Dummy"
+          "label": "Done",
+          "default": "Done"
         }
       ]
     }

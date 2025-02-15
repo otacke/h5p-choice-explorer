@@ -119,7 +119,8 @@
           "default": "Es fehlen Entscheidungsparameter und/oder Zielparameter."
         },
         {
-          "label": "Dummy"
+          "label": "Fertig",
+          "default": "Fertig"
         }
       ]
     }

@@ -239,10 +239,10 @@
         "default": "There are missing decision parameters and/or target parameters."
       },
       {
-        "name": "dummy",
-        "type": "boolean",
-        "label": "Dummy",
-        "widget": "none"
+        "name": "done",
+        "type": "text",
+        "label": "Done",
+        "default": "Done"
       }
     ]
   }

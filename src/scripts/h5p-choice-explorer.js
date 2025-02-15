@@ -129,7 +129,6 @@ export default class ChoiceExplorer extends H5P.Question {
       sanitizedParams.decisions[decisionIndex].weights = weight.targets.map((target) => target.weight);
     });
 
-
     return sanitizedParams;
   }
 }
