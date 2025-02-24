@@ -116,9 +116,10 @@ export default class Slider {
     this.slider.style.background =
       `linear-gradient(to right, var(--color-primary-dark-80) ${percentage}%, var(--color-primary-15) ${percentage}%)`;
 
+    this.slider.value = Math.max(0, Math.min(value, this.params.maxValue));
+
     // Required for Firefox to update slider value reliably when max value changed.
     window.requestAnimationFrame(() => {
-      this.slider.value = Math.max(0, Math.min(value, this.params.maxValue));
       this.slider.setAttribute('aria-valuenow', value);
     });
   }
@@ -172,17 +173,17 @@ export default class Slider {
    * @returns {boolean} True if key was handled, false otherwise.
    */
   handleKeyboardEvent(event) {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
+    if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.code)) {
       return false;
     }
 
     // Speed up slightly when holding down keys (only relevant for left/right keys).
     const delta = Math.max(1, Math.log(this.keydownTime + 1));
 
-    if (event.code === 'ArrowLeft') {
+    if (event.code === 'ArrowLeft' || event.code === 'ArrowDown') {
       this.setValue(this.getValue() - delta);
     }
-    else if (event.code === 'ArrowRight') {
+    else if (event.code === 'ArrowRight' || event.code === 'ArrowUp') {
       this.setValue(this.getValue() + delta);
     }
     else if (event.code === 'Home') {
@@ -206,6 +207,7 @@ export default class Slider {
    */
   handleSliderStarted(event) {
     this.isSeeking = true;
+
     if (event instanceof KeyboardEvent) {
       const wasKeyHandled = this.handleKeyboardEvent(event);
       if (wasKeyHandled) {
