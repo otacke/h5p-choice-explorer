@@ -70,7 +70,7 @@ export default class SliderPanel {
         min: this.params.min,
         max: this.params.max,
         unit: this.params.unit,
-        baseMax: this.dynamicMaxValue,
+        baseMax: this.params.max,
         ariaLabelUUID: uuid
       }, {
         onInput: (value) => {
@@ -140,7 +140,6 @@ export default class SliderPanel {
     this.dynamicMaxValue = value;
 
     this.slider.setDragMaxValue(value);
-    this.input.setMaxValue(value);
   }
 
   getId() {
@@ -166,7 +165,6 @@ export default class SliderPanel {
   handleSliderSeeked(value) {
     if (!this.hasFixedMaxValue()) {
       this.dynamicMaxValue = this.computeNextMaxValue(value);
-      this.input.setMaxValue(this.dynamicMaxValue);
     }
 
     this.input.setValue(value);

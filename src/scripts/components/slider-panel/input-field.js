@@ -57,18 +57,6 @@ export default class InputField {
   }
 
   /**
-   * Set max value.
-   * @param {number} maxValue Maximum value.
-   */
-  setMaxValue(maxValue) {
-    if (typeof maxValue !== 'number' || isNaN(maxValue) || maxValue < this.params.min) {
-      return;
-    }
-
-    this.dom.setAttribute('max', `${maxValue}`);
-  }
-
-  /**
    * Set value.
    * @param {number} value Value to set.
    */
