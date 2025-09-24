@@ -21,14 +21,14 @@ export default class SliderPanel {
     this.params = Util.extend({
       label: '',
       min: 0,
-      unit: ''
+      unit: '',
     }, params);
 
     this.dynamicMaxValue = FALLBACK_MAX_VALUE;
 
     this.callbacks = Util.extend({
       onValueChanged: () => {},
-      onMaxValueChanged: () => {}
+      onMaxValueChanged: () => {},
     }, callbacks);
 
     this.dom = document.createElement('div');
@@ -50,7 +50,7 @@ export default class SliderPanel {
       {
         minValue: this.params.min,
         maxValue: this.params.max || this.dynamicMaxValue,
-        ariaLabelUUID: uuid
+        ariaLabelUUID: uuid,
       },
       {
         onSeeked: (value) => {
@@ -60,8 +60,8 @@ export default class SliderPanel {
         onEnded: (value) => {
           this.handleSliderEnded(value);
           this.callbacks.onValueChanged(value);
-        }
-      }
+        },
+      },
     );
     panel.append(this.slider.getDOM());
 
@@ -71,7 +71,7 @@ export default class SliderPanel {
         max: this.params.max,
         unit: this.params.unit,
         baseMax: this.params.max,
-        ariaLabelUUID: uuid
+        ariaLabelUUID: uuid,
       }, {
         onInput: (value) => {
           this.handleInputInput(value);
@@ -79,8 +79,8 @@ export default class SliderPanel {
         },
         onBlur: () => {
           this.handleInputBlur();
-        }
-      }
+        },
+      },
     );
     panel.append(this.input.getDOM());
 
@@ -155,6 +155,7 @@ export default class SliderPanel {
   computeNextMaxValue(value, base = FALLBACK_MAX_VALUE) {
     const adjustedValue = Math.max(value + 1, base);
     const exponent = Math.ceil(Math.log10(adjustedValue / base));
+    // eslint-disable-next-line no-magic-numbers
     return base * Math.pow(10, exponent);
   }
 

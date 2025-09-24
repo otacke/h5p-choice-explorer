@@ -18,7 +18,7 @@ export default class Slider {
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
       ariaLabel: 'Slider',
-      minValue: 0
+      minValue: 0,
     }, params);
 
     this.callbacks = Util.extend({
@@ -26,7 +26,7 @@ export default class Slider {
       onSeeked: () => {},
       onEnded: () => {},
       onFocus: () => {},
-      onBlur: () => {}
+      onBlur: () => {},
     }, callbacks);
 
     this.dom = document.createElement('div');

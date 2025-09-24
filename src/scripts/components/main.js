@@ -57,8 +57,8 @@ export default class Main {
           },
           onMaxValueChanged: () => {
             this.updateInputfieldsWidth();
-          }
-        }
+          },
+        },
       );
       slidersDOM.append(this.sliderPanels[option.id].getDOM());
     });
@@ -70,8 +70,8 @@ export default class Main {
           unit: target.unit,
           min: target.min,
           max: target.max,
-          givesLiveFeedback: this.params.behaviour.givesLiveFeedback
-        }
+          givesLiveFeedback: this.params.behaviour.givesLiveFeedback,
+        },
       );
       this.resultsPanels.push(resultsPanel);
       resultsDOM.append(resultsPanel.getDOM());
@@ -190,7 +190,7 @@ export default class Main {
     }
 
     return {
-      decisions: Object.entries(this.sliderPanels).map(([id, sliderPanel]) => ({ id, value: sliderPanel.getValue() }))
+      decisions: Object.entries(this.sliderPanels).map(([id, sliderPanel]) => ({ id, value: sliderPanel.getValue() })),
     };
   }
 

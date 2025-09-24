@@ -15,12 +15,12 @@ export default class InputField {
    */
   constructor(params = {}, callbacks = {}) {
     this.params = Util.extend({
-      min: 0
+      min: 0,
     }, params);
 
     this.callbacks = Util.extend({
       onInput: () => {},
-      onBlur: () => {}
+      onBlur: () => {},
     }, callbacks);
 
     const value = Math.max(params.min, Math.min(0, params.max ?? 0));
