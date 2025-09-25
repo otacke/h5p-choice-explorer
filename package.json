@@ -1,6 +1,6 @@
 {
   "name": "h5p-choice-explorer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Let users explore how different choices affect the outcome of a scenario.",
   "private": true,
   "scripts": {
