@@ -18,6 +18,7 @@
     },
     {
       "label": "Decision parameters",
+      "entity": "parameter",
       "widgets": [
         {
           "label": "Default"

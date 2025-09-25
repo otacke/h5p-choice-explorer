@@ -18,6 +18,7 @@
     },
     {
       "label": "Entscheidungsparameter",
+      "entity": "Parameter",
       "widgets": [
         {
           "label": "Vorgabe"

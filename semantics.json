@@ -63,7 +63,7 @@
     "name": "decisions",
     "label": "Decision parameters",
     "type": "list",
-    "entity": "decision",
+    "entity": "parameter",
     "widgets": [
       {
         "name": "VerticalTabs",
